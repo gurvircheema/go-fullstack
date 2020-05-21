@@ -202,7 +202,6 @@ func TestUpdateUser(t *testing.T) {
 		log.Fatalf("cannot login: %v\n", err)
 	}
 	tokenString := fmt.Sprintf("Bearer %v", token)
-	fmt.Println("Bearer Token", tokenString)
 
 	samples := []struct {
 		id             string
@@ -213,16 +212,16 @@ func TestUpdateUser(t *testing.T) {
 		tokenGiven     string
 		errorMessage   string
 	}{
-		// {
-		// 	// Convert int32 to int first before converting to string
-		// 	id:             strconv.Itoa(int(AuthID)),
-		// 	updateJSON:     `{"nickname":"Grand", "email": "grand@gmail.com", "password": "password"}`,
-		// 	statusCode:     200,
-		// 	updateNickname: "Grand",
-		// 	updateEmail:    "grand@gmail.com",
-		// 	tokenGiven:     tokenString,
-		// 	errorMessage:   "",
-		// },
+		{
+			// Convert int32 to int first before converting to string
+			id:             strconv.Itoa(int(AuthID)),
+			updateJSON:     `{"nickname":"Grand", "email": "grand@gmail.com", "password": "password"}`,
+			statusCode:     200,
+			updateNickname: "Grand",
+			updateEmail:    "grand@gmail.com",
+			tokenGiven:     tokenString,
+			errorMessage:   "",
+		},
 		{
 			// When password field is empty
 			id:           strconv.Itoa(int(AuthID)),
@@ -319,7 +318,7 @@ func TestUpdateUser(t *testing.T) {
 		if err != nil {
 			t.Errorf("Cannot convert to json: %v", err)
 		}
-		// assert.Equal(t, rr.Code, v.statusCode)
+		assert.Equal(t, rr.Code, v.statusCode)
 		if v.statusCode == 200 {
 			assert.Equal(t, responseMap["nickname"], v.updateNickname)
 			assert.Equal(t, responseMap["email"], v.updateEmail)
